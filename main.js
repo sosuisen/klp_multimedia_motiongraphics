@@ -36,13 +36,13 @@ const setRandomProps = (spr) => {
 
   // サイズを変更
   // Math.random()は 0以上1未満の値を返す
-  // spr.scale.set(0.05 + Math.random());
+  spr.scale.set(0.05 + Math.random());
 
   // speedプロパティを独自に追加して、速度を格納しておく
   spr.speed = 1 + Math.random() * 3;
 
   // 角度はラジアンで指定。左右に最大45度
-  // spr.rotation = Math.PI / (-2.0 + 4.0 * Math.random());
+  spr.rotation = Math.PI / (-2.0 + 4.0 * Math.random());
 
   return spr;
 };
@@ -54,6 +54,16 @@ for (let i = 0; i < maxSprites; i++){
   sprites.addChild(kyoco);
 }
 
+let mouseX = 0;
+let mouseY = 0;
+app.stage.interactive = true;
+app.stage.hitArea = app.screen; // app.stageをinteractiveにするときは必須。
+app.stage.on('pointermove', event => {
+    console.log(`[stage] screen(${event.screen.x}, ${event.screen.y}))`);
+    mouseX = event.screen.x;
+    mouseY = event.screen.y;
+});
+
 let time = 0.0;
 app.ticker.add(delta => {
   time += delta;
@@ -62,12 +72,18 @@ app.ticker.add(delta => {
     // まっすぐ落ちる
     spr.x = spr.orgX;
     // 元のx座標に対して、最大でスプライト幅の半分までsin関数で左右にゆらぐ
-    // spr.x = spr.orgX + spr.width / 2.0 * Math.sin(time/50);
+    spr.x = spr.orgX + spr.width / 2.0 * Math.sin(time/50);
 
+    // 基本課題：マウスとの距離が128以内だと回転する
+    let distanceFromMouse = Math.sqrt(Math.pow(spr.x - mouseX, 2) + Math.pow(spr.y - mouseY, 2));
+    if (distanceFromMouse < 128){
+      spr.rotation += Math.PI/10;
+    }
+    
     // どれも同じ速度で落ちる
     spr.y += 3;
     // y座標をそれぞれのspeedの値だけ増やす
-    // spr.y += spr.speed;
+    spr.y += spr.speed;
 
     // 下端に達したスプライトは上へ戻す
     // スプライトの座標原点は中心なので、サイズの半分を足しておく
