@@ -78,30 +78,14 @@ app.ticker.add(delta => {
     let len = Math.sqrt(Math.pow(spr.x - mouseX, 2) + Math.pow(spr.y - mouseY, 2));
     if (len < umbrellaSize){
       // ベクトル((spr.x - mouseX), (spr.y - mouseY))と
-      // ベクトル(0, -1)との内積innerを用いて、そのなす角のcosを求める
-      const inner = (spr.x - mouseX) * 0 + (spr.y - mouseY) * (-1);
-      const cos = inner / (len + 1);
+      // ベクトル(0, -1)との内積を用いて、そのなす角のcosを求めることができる。
 
-      // スプライトはカーソルよりも上か？
-      if(cos > 0) {
-        // アークコサインMath.acos()はcosの値に対応する角度をラジアンで返す。
-        const currentAngle = Math.acos(cos);
-        // 現在の角度に 1度（Math.PI/180ラジアン）加える。
-        // ただし 90度を越えない
-        const newAngle = Math.min(currentAngle + Math.PI/180, Math.PI/2);
-        // スプライトはカーソルの左側か右側か？
-        let sign = 1;
-        if(spr.x - mouseX < 0) {
-          // 左側の場合
-          sign = -1;
-        }
-        const newX = mouseX + sign * umbrellaSize * Math.sin(newAngle);
-        const newY = mouseY - umbrellaSize * Math.cos(newAngle);
-        
-        // 代入して終わり
-        spr.x = newX;
-        spr.y = newY;
-      }
+      // 発展課題：以下計算して、新しいspr.xの値とspr.yの値をセットしよう。
+
+
+
+
+
     }
 
     
@@ -114,6 +98,9 @@ app.ticker.add(delta => {
       setRandomProps(spr);
     }
 
+    // 傘の位置をマウスカーソルの位置へ動かす。
+    // なお、今回は物理的な当たり判定の計算はしていないので、
+    // 傘を描画しなくても雪の動作は同じ。
     umbrella.position.set(mouseX, mouseY);
   })
 });
