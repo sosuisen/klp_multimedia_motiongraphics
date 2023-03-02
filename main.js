@@ -6,15 +6,18 @@ document.body.appendChild(app.view);
 
 // 表示をする画像の最大数を指定
 let maxSprites = 100;
+// let maxSprites = 1000;
 
 // 最も処理効率が高いParticleContainerを用いる。
 // 処理効率の代わりに、マスク、フィルタなどの機能が使えない。
 // https://pixijs.download/dev/docs/PIXI.ParticleContainer.html
+// ただし、通常のPIXI.Container()と差の出るほどシビアな状況はあまりなさそう。
 let sprites = new PIXI.ParticleContainer(maxSprites, {
   vertices: true, // scaleを変更する場合はtrue
   position: true, // positionを変更する場合はtrue
   rotation: true, // rotationを変更する場合はtrue
 });
+// let sprites = new PIXI.Container();
 
 app.stage.addChild(sprites);
 
