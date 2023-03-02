@@ -54,6 +54,7 @@ for (let i = 0; i < maxSprites; i++){
   sprites.addChild(kyoco);
 }
 
+// マウス位置を取得
 let mouseX = 0;
 let mouseY = 0;
 app.stage.interactive = true;
@@ -75,11 +76,11 @@ app.ticker.add(delta => {
     spr.x = spr.orgX + spr.width / 2.0 * Math.sin(time/50);
 
     // 基本課題：マウスとの距離が128以内だと回転する
-    let distanceFromMouse = Math.sqrt(Math.pow(spr.x - mouseX, 2) + Math.pow(spr.y - mouseY, 2));
-    if (distanceFromMouse < 128){
-      spr.rotation += Math.PI/10;
-    }
+
     
+
+
+
     // どれも同じ速度で落ちる
     spr.y += 3;
     // y座標をそれぞれのspeedの値だけ増やす
